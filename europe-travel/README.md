@@ -1,43 +1,62 @@
 # Wayfarer — A European Travel Guide
 
-A small server-rendered travel site covering 12 European cities, built with **Java 17, Spring
-Boot 3, and Thymeleaf**, and packaged with **Maven**. No database — destinations live in an
-in-memory repository, so there's nothing to configure before you run it.
+A small server-rendered travel site covering 12 European cities, built with **Java 21, Spring
+Boot 3, and Thymeleaf**, packaged as a **WAR** with Maven for deployment to an external
+**Apache Tomcat**. No database — destinations live in an in-memory repository, so there's
+nothing to configure before you run it.
 
 ## Requirements
 
-- Java 17 or newer (`java -version`)
-- Maven 3.8+ (`mvn -version`) — or just use the included `mvnw` wrapper if you add one
+- Java 21 (`java -version`)
+- Maven 3.8+ (`mvn -version`)
+- Apache Tomcat 10.x (Spring Boot 3 uses the Jakarta EE namespace, which requires Tomcat 10+;
+  Tomcat 9 and earlier will not work)
 
-## Run it locally
+## Build the WAR
 
 ```bash
 cd europe-travel
-mvn spring-boot:run
+mvn clean package
 ```
 
-Then open **http://localhost:8080**.
+This produces `target/europe-travel.war`.
 
-## Build a deployable jar
+## Deploy to Tomcat
+
+1. Copy the WAR into Tomcat's `webapps` directory:
+   ```bash
+   cp target/europe-travel.war $CATALINA_HOME/webapps/
+   ```
+2. Start (or restart) Tomcat:
+   ```bash
+   $CATALINA_HOME/bin/startup.sh
+   ```
+3. Tomcat auto-deploys the WAR and unpacks it. Visit:
+   ```
+   http://localhost:8080/europe-travel/
+   ```
+   The context path matches the WAR's filename (`europe-travel`). To serve it at the root
+   path (`http://localhost:8080/`) instead, rename the file to `ROOT.war` before copying it in.
+
+To redeploy after a change, stop Tomcat, delete the old `webapps/europe-travel/` folder and
+`.war` file, rebuild with `mvn clean package`, and copy the new WAR in again.
+
+## Run it without Tomcat (for quick local testing)
+
+The WAR is also self-executable, so you don't need Tomcat installed just to try it out:
 
 ```bash
 mvn clean package
-java -jar target/europe-travel.jar
+java -jar target/europe-travel.war
 ```
 
-That jar is self-contained (embedded Tomcat) — copy it to any server with Java 17+ and run it
-the same way. To change the port, either edit `server.port` in
-`src/main/resources/application.properties` or run:
-
-```bash
-java -jar target/europe-travel.jar --server.port=9090
-```
+Then open **http://localhost:8080**.
 
 ## Project layout
 
 ```
 src/main/java/com/wayfarer/europe/
-  EuropeTravelApplication.java   Spring Boot entry point
+  EuropeTravelApplication.java   Entry point + SpringBootServletInitializer (for Tomcat deploy)
   model/Destination.java         Destination data model
   data/DestinationRepository.java In-memory list of 12 destinations
   controller/HomeController.java  "/" and "/about"
@@ -56,16 +75,3 @@ country, region, tagline, description, best time to visit, average daily cost, t
 coordinates, and an accent hex color for its card. It'll show up on the home page and get its
 own `/destinations/{slug}` page automatically.
 
-## Deploying
-
-Because it packages to a single executable jar, it runs anywhere with a JVM: a plain VPS, a
-Docker container (`FROM eclipse-temurin:17-jre` + `COPY target/europe-travel.jar app.jar` +
-`CMD ["java","-jar","app.jar"]`), or any platform that accepts a Java buildpack (Render,
-Railway, Heroku, Elastic Beanstalk, etc.).
-
-## Note on this build
-
-This project was assembled without network access to Maven Central, so the Maven build itself
-hasn't been run end-to-end in this environment — the code has been carefully reviewed by hand,
-but please run `mvn clean package` yourself as a first step and let me know if anything doesn't
-compile so it can be fixed.

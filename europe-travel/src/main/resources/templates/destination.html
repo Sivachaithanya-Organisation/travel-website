@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments :: head(title=${d.city})}"></head>
+<body>
+
+<nav th:replace="~{fragments :: nav}"></nav>
+
+<section class="d-hero">
+  <div class="wrap">
+    <p class="breadcrumb"><a href="/">Destinations</a> &nbsp;/&nbsp; <span th:text="${d.city}">City</span></p>
+    <span class="region-tag" th:text="${d.region} + ' Europe'">Region</span>
+    <h1 th:text="${d.city}">City</h1>
+    <p class="country" th:text="${d.country} + ' · ' + ${d.latLong}">Country</p>
+    <p class="tagline" th:text="${d.tagline}">Tagline</p>
+  </div>
+</section>
+
+<section class="d-body">
+  <div class="wrap">
+    <div>
+      <p class="section-heading">About</p>
+      <p class="description" th:text="${d.description}">Description</p>
+
+      <p class="section-heading">Don't miss</p>
+      <ul class="highlights">
+        <li th:each="h : ${d.highlights}" th:text="${h}">Highlight</li>
+      </ul>
+    </div>
+
+    <aside class="info-card">
+      <div class="info-row">
+        <span class="k">Best time</span>
+        <span class="v" th:text="${d.bestTime}">—</span>
+      </div>
+      <div class="info-row">
+        <span class="k">Avg. daily cost</span>
+        <span class="v" th:text="${d.avgDailyCost}">—</span>
+      </div>
+      <div class="info-row">
+        <span class="k">Region</span>
+        <span class="v" th:text="${d.region} + ' Europe'">—</span>
+      </div>
+      <div class="info-row">
+        <span class="k">Coordinates</span>
+        <span class="v" th:text="${d.latLong}">—</span>
+      </div>
+    </aside>
+  </div>
+</section>
+
+<section class="more-strip" th:if="${not #lists.isEmpty(more)}">
+  <div class="wrap">
+    <h2>More in <span th:text="${d.region}">Region</span> Europe</h2>
+    <div class="more-grid">
+      <a class="postcard" th:each="m : ${more}" th:href="@{/destinations/{slug}(slug=${m.slug})}">
+        <div class="postcard-top" th:style="'background: linear-gradient(160deg,' + ${m.accent} + ' 0%, ' + ${m.accent} + 'cc 100%);'">
+          <span class="region-tag" th:text="${m.region}">Region</span>
+          <div>
+            <div class="place" th:text="${m.city}">City</div>
+            <div class="country" th:text="${m.country}">Country</div>
+          </div>
+        </div>
+        <div class="postcard-body">
+          <p class="tagline" th:text="${m.tagline}">Tagline</p>
+          <div class="postcard-foot">
+            <span th:text="${m.latLong}">coords</span>
+            <span class="go">Explore &rarr;</span>
+          </div>
+        </div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<footer th:replace="~{fragments :: footer}"></footer>
+
+</body>
+</html>

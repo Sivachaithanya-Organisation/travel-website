@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments :: head(title='Not found')}"></head>
+<body>
+
+<nav th:replace="~{fragments :: nav}"></nav>
+
+<section class="not-found wrap">
+  <h1>Off the map.</h1>
+  <p class="lead" style="margin:0 auto 28px;">That destination doesn't exist yet — or the trail
+    went cold. Head back and pick another city.</p>
+  <a href="/" class="chip active" style="display:inline-block;">Back to Destinations</a>
+</section>
+
+<footer th:replace="~{fragments :: footer}"></footer>
+
+</body>
+</html>

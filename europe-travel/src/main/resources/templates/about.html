@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments :: head(title='About')}"></head>
+<body>
+
+<nav th:replace="~{fragments :: nav}"></nav>
+
+<section class="about-content wrap">
+  <p class="eyebrow">Why Wayfarer</p>
+  <h1>Built for the trip planning that actually matters.</h1>
+  <p>Wayfarer is a small, opinionated guide to twelve European cities. No listicles, no
+    affiliate-driven "top 47 things to do" — just the season to go, roughly what a day costs,
+    and two or three things worth rearranging your itinerary for.</p>
+  <p>Every destination page is short on purpose. If you want the full history of a city, there
+    are better books for that. This is the version you read on the train, twenty minutes before
+    you arrive.</p>
+  <p>This site runs on Spring Boot and Thymeleaf, and ships as a single Maven-built jar — clone
+    it, add your own cities, and it's yours.</p>
+</section>
+
+<footer th:replace="~{fragments :: footer}"></footer>
+
+</body>
+</html>

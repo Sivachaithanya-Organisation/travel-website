@@ -1,0 +1,559 @@
+/* ============================================================
+   Wayfarer — a European travel journal
+   Design language: vintage cartography. Ink, parchment, brass.
+   ============================================================ */
+
+:root {
+  --ink: #1C2B33;
+  --ink-soft: #33454F;
+  --parchment: #EFE7D6;
+  --parchment-dark: #E3D6B8;
+  --brass: #B08D57;
+  --brass-light: #D2B37E;
+  --teal: #2E6E6A;
+  --rust: #A6472B;
+  --cream: #F7F2E7;
+  --line: rgba(28, 43, 51, 0.16);
+
+  --font-display: 'Fraunces', Georgia, 'Times New Roman', serif;
+  --font-body: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-mono: 'JetBrains Mono', 'Courier New', monospace;
+
+  --radius: 3px;
+}
+
+* { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  margin: 0;
+  background: var(--parchment);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 1.6;
+  background-image:
+    radial-gradient(circle at 1px 1px, rgba(28,43,51,0.05) 1px, transparent 0);
+  background-size: 22px 22px;
+}
+
+a { color: inherit; text-decoration: none; }
+
+img, svg { max-width: 100%; display: block; }
+
+.wrap {
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: 0 28px;
+}
+
+/* ---------- Nav ---------- */
+
+.site-nav {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background: rgba(239, 231, 214, 0.92);
+  backdrop-filter: blur(6px);
+  border-bottom: 1px solid var(--line);
+}
+
+.site-nav .wrap {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 68px;
+}
+
+.brand {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 1.35rem;
+  letter-spacing: 0.01em;
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+}
+
+.brand .mark {
+  color: var(--rust);
+  font-style: italic;
+  font-weight: 500;
+}
+
+.nav-links {
+  display: flex;
+  gap: 28px;
+  font-size: 0.92rem;
+  letter-spacing: 0.02em;
+}
+
+.nav-links a {
+  position: relative;
+  padding-bottom: 4px;
+  color: var(--ink-soft);
+}
+
+.nav-links a:hover { color: var(--ink); }
+
+.nav-links a::after {
+  content: '';
+  position: absolute;
+  left: 0; right: 0; bottom: 0;
+  height: 1px;
+  background: var(--rust);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.25s ease;
+}
+
+.nav-links a:hover::after { transform: scaleX(1); }
+
+/* ---------- Hero ---------- */
+
+.hero {
+  position: relative;
+  padding: 76px 0 56px;
+  overflow: hidden;
+  border-bottom: 1px solid var(--line);
+}
+
+.hero-map {
+  position: absolute;
+  right: -60px;
+  top: -40px;
+  width: 560px;
+  opacity: 0.9;
+  pointer-events: none;
+}
+
+.hero .wrap { position: relative; z-index: 2; }
+
+.eyebrow {
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--teal);
+  margin: 0 0 18px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.eyebrow::before {
+  content: '';
+  width: 28px;
+  height: 1px;
+  background: var(--teal);
+  display: inline-block;
+}
+
+.hero h1 {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: clamp(2.6rem, 5.4vw, 4.4rem);
+  line-height: 1.02;
+  letter-spacing: -0.01em;
+  margin: 0 0 22px;
+  max-width: 720px;
+}
+
+.hero h1 em {
+  font-style: italic;
+  color: var(--rust);
+  font-weight: 500;
+}
+
+.hero p.lead {
+  max-width: 480px;
+  font-size: 1.08rem;
+  color: var(--ink-soft);
+  margin: 0 0 32px;
+}
+
+.hero-stats {
+  display: flex;
+  gap: 40px;
+  margin-top: 44px;
+}
+
+.hero-stats .stat {
+  border-left: 2px solid var(--brass);
+  padding-left: 14px;
+}
+
+.hero-stats .stat .num {
+  font-family: var(--font-display);
+  font-size: 1.9rem;
+  font-weight: 600;
+  line-height: 1;
+  display: block;
+}
+
+.hero-stats .stat .label {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+}
+
+/* ---------- Region filter ---------- */
+
+.filter-bar {
+  padding: 30px 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.filter-bar .wrap {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.filter-label {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  margin-right: 8px;
+}
+
+.chip {
+  font-family: var(--font-body);
+  font-size: 0.87rem;
+  padding: 7px 16px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--ink-soft);
+  transition: all 0.18s ease;
+}
+
+.chip:hover { border-color: var(--brass); color: var(--ink); }
+
+.chip.active {
+  background: var(--ink);
+  border-color: var(--ink);
+  color: var(--cream);
+}
+
+/* ---------- Destination grid ---------- */
+
+.grid-section { padding: 52px 0 90px; }
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 26px;
+}
+
+@media (max-width: 900px) {
+  .grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 620px) {
+  .grid { grid-template-columns: 1fr; }
+}
+
+.postcard {
+  background: var(--cream);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  overflow: hidden;
+  position: relative;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  display: flex;
+  flex-direction: column;
+}
+
+.postcard:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 14px 30px rgba(28, 43, 51, 0.14);
+}
+
+.postcard-top {
+  height: 132px;
+  position: relative;
+  display: flex;
+  align-items: flex-end;
+  padding: 14px 18px;
+  color: var(--cream);
+}
+
+.postcard-top .region-tag {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  background: rgba(28,43,51,0.28);
+  padding: 4px 9px;
+  border-radius: 999px;
+}
+
+.postcard-top .place {
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  font-weight: 600;
+  line-height: 1.05;
+}
+
+.postcard-top .country {
+  font-size: 0.82rem;
+  opacity: 0.88;
+}
+
+.postcard-body {
+  padding: 18px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.postcard-body .tagline {
+  font-style: italic;
+  color: var(--ink-soft);
+  font-size: 0.92rem;
+  margin: 0 0 14px;
+  flex: 1;
+}
+
+.postcard-foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 12px;
+  border-top: 1px dashed var(--line);
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  color: var(--ink-soft);
+}
+
+.postcard-foot .go {
+  color: var(--rust);
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 0.85rem;
+}
+
+/* ---------- Destination detail ---------- */
+
+.d-hero {
+  padding: 56px 0 40px;
+  border-bottom: 1px solid var(--line);
+}
+
+.breadcrumb {
+  font-family: var(--font-mono);
+  font-size: 0.76rem;
+  color: var(--ink-soft);
+  margin-bottom: 22px;
+  letter-spacing: 0.03em;
+}
+
+.breadcrumb a { color: var(--teal); }
+
+.d-hero .region-tag {
+  display: inline-block;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  background: var(--ink);
+  color: var(--cream);
+  padding: 5px 11px;
+  border-radius: 999px;
+  margin-bottom: 16px;
+}
+
+.d-hero h1 {
+  font-family: var(--font-display);
+  font-size: clamp(2.4rem, 5vw, 3.6rem);
+  font-weight: 600;
+  margin: 0 0 6px;
+  letter-spacing: -0.01em;
+}
+
+.d-hero .country {
+  font-size: 1.05rem;
+  color: var(--ink-soft);
+  margin-bottom: 18px;
+}
+
+.d-hero .tagline {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 1.3rem;
+  color: var(--teal);
+  max-width: 640px;
+}
+
+.d-body {
+  padding: 48px 0 80px;
+}
+
+.d-body .wrap {
+  display: grid;
+  grid-template-columns: 1.7fr 1fr;
+  gap: 56px;
+}
+
+@media (max-width: 800px) {
+  .d-body .wrap { grid-template-columns: 1fr; }
+}
+
+.d-body p.description {
+  font-size: 1.06rem;
+  color: var(--ink-soft);
+  margin: 0 0 32px;
+}
+
+.section-heading {
+  font-family: var(--font-mono);
+  font-size: 0.74rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--brass);
+  margin: 0 0 16px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--line);
+}
+
+.highlights {
+  list-style: none;
+  margin: 0 0 40px;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.highlights li {
+  display: flex;
+  gap: 14px;
+  align-items: flex-start;
+  font-size: 0.98rem;
+}
+
+.highlights li::before {
+  content: '';
+  width: 8px;
+  height: 8px;
+  margin-top: 7px;
+  flex-shrink: 0;
+  background: var(--rust);
+  transform: rotate(45deg);
+}
+
+.info-card {
+  background: var(--cream);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 26px;
+  height: fit-content;
+  position: sticky;
+  top: 90px;
+}
+
+.info-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 14px;
+  padding: 13px 0;
+  border-bottom: 1px dashed var(--line);
+  font-size: 0.92rem;
+}
+
+.info-row:last-child { border-bottom: none; }
+
+.info-row .k {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+}
+
+.info-row .v { text-align: right; font-weight: 500; }
+
+.more-strip {
+  padding: 0 0 90px;
+}
+
+.more-strip h2 {
+  font-family: var(--font-display);
+  font-size: 1.6rem;
+  font-weight: 600;
+  margin: 0 0 24px;
+}
+
+.more-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 22px;
+}
+
+@media (max-width: 800px) {
+  .more-grid { grid-template-columns: 1fr; }
+}
+
+/* ---------- About ---------- */
+
+.about-content {
+  padding: 60px 0 90px;
+  max-width: 680px;
+}
+
+.about-content h1 {
+  font-family: var(--font-display);
+  font-size: 2.6rem;
+  font-weight: 600;
+  margin-bottom: 20px;
+}
+
+.about-content p { color: var(--ink-soft); font-size: 1.04rem; margin-bottom: 18px; }
+
+/* ---------- Footer ---------- */
+
+footer {
+  border-top: 1px solid var(--line);
+  padding: 40px 0;
+  background: var(--ink);
+  color: var(--cream);
+}
+
+footer .wrap {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+footer .brand { color: var(--cream); }
+footer .brand .mark { color: var(--brass-light); }
+
+footer .fine-print {
+  font-family: var(--font-mono);
+  font-size: 0.76rem;
+  color: rgba(247,242,231,0.55);
+}
+
+/* ---------- 404 ---------- */
+
+.not-found {
+  padding: 110px 0;
+  text-align: center;
+}
+
+.not-found h1 {
+  font-family: var(--font-display);
+  font-size: 4rem;
+  margin-bottom: 12px;
+}
