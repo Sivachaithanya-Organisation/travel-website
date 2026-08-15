@@ -1,7 +1,7 @@
 pipeline {
     agent any
 
-    environments {
+    environment {
         SERVER_IP = credentials('maven-server-ip')
         PROJECT_URL = "https://github.com/Sivachaithanya-Organisation/travel-website.git"
         REPO_NAME = "travel-website"
